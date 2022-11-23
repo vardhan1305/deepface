@@ -123,10 +123,14 @@ def analysis(db_path, model_name = 'VGG-Face', detector_backend = 'opencv', dist
 	tic = time.time()
 
 	cap = cv2.VideoCapture(source) #webcam
-
+	pre_time=0
+	new_time=0
 	while(True):
 		ret, img = cap.read()
-
+		new_time=time.time()
+		fps=1/(new_time-pre_time)
+		pre_time=new_time
+		fps=int(fps)
 		if img is None:
 			break
 
@@ -161,7 +165,7 @@ def analysis(db_path, model_name = 'VGG-Face', detector_backend = 'opencv', dist
 				cv2.rectangle(img, (x,y), (x+w,y+h), (67,67,67), 1) #draw rectangle to main image
 
 				cv2.putText(img, str(frame_threshold - face_included_frames), (int(x+w/4),int(y+h/1.5)), cv2.FONT_HERSHEY_SIMPLEX, 4, (255, 255, 255), 2)
-
+				cv2.putText(img, str(fps), (8,80), cv2.FONT_HERSHEY_SIMPLEX, 3, (100,255,0), 4)
 				detected_face = img[int(y):int(y+h), int(x):int(x+w)] #crop detected face
 
 				#-------------------------------------
