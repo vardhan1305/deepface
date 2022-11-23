@@ -131,6 +131,7 @@ def analysis(db_path, model_name = 'VGG-Face', detector_backend = 'opencv', dist
 		fps=1/(new_time-pre_time)
 		pre_time=new_time
 		fps=int(fps)
+		cv2.putText(img, str(fps), (50,100), cv2.FONT_HERSHEY_SIMPLEX, 10, (255,0,0), 10)
 		if img is None:
 			break
 
